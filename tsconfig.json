@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/common": [
+        "libs/common/src",
+        "libs/common/src"
+      ],
+      "@app/common/*": [
+        "libs/common/src/*",
+        "libs/common/src/*"
+      ],
+      "@app/order-domain": [
+        "apps/order-service/src/order-domain",
+        "apps/order-service/src/order-domain"
+      ],
+      "@app/order-domain/*": [
+        "apps/order-service/src/order-domain/*",
+        "apps/order-service/src/order-domain/*"
+      ],
+      "@app/order-domain-core": [
+        "apps/order-service/src/order-domain/order-domain-core",
+        "apps/order-service/src/order-domain/order-domain-core"
+      ],
+      "@app/order-domain-core/*": [
+        "apps/order-service/src/order-domain/order-domain-core/*",
+        "apps/order-service/src/order-domain/order-domain-core/*"
+      ],
+      "@app/order-application": [
+        "apps/order-service/src/order-application",
+        "apps/order-service/src/order-application"
+      ],
+      "@app/order-application/*": [
+        "apps/order-service/src/order-application/*",
+        "apps/order-service/src/order-application/*"
+      ]
+    }
+  }
+}
