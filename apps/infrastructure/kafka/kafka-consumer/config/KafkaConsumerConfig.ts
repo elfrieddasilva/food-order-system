@@ -8,6 +8,7 @@ import {
 } from 'kafkajs';
 import { KafkaConfigData } from '../../kafka-config-data/KafkaConfigData';
 import { KafkaConsumerConfigData } from '../../kafka-config-data/KafkaConsumerConfigData';
+import { KafkaConsumerException } from '../exception/KafkaConsumerException';
 
 export class KafkaConsumerConfig {
   private kafkaConfigData: KafkaConfigData;
@@ -98,7 +99,7 @@ export class KafkaConsumerConfig {
         },
       });
     } catch (error) {
-      throw error;
+      throw new KafkaConsumerException(error);
     }
   }
 
@@ -116,7 +117,7 @@ export class KafkaConsumerConfig {
         },
       });
     } catch (error) {
-      console.log('Error: ', error);
+      throw new KafkaConsumerException(error);
     }
   }
 
