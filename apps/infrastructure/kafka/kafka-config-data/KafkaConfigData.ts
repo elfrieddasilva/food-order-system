@@ -1,11 +1,11 @@
 export class KafkaConfigData {
-  private bootstrapServers: string;
+  private bootstrapServers: string[];
   private schemaRegistryUrlKey: string;
   private numOfPartitions: number;
   private replicationFactor: number;
 
   constructor(
-    bootstrapServers: string,
+    bootstrapServers: string[],
     schemaRegistryUrlKey: string,
     numOfPartitions: number,
     replicationFactor: number,
@@ -16,7 +16,7 @@ export class KafkaConfigData {
     this.replicationFactor = replicationFactor;
   }
 
-  setBootstrapServers(bootstrapServers: string) {
+  setBootstrapServers(bootstrapServers: string[]) {
     this.bootstrapServers = bootstrapServers;
   }
 

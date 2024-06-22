@@ -16,7 +16,7 @@ export class KafkaProducerImpl<K, V> implements KafkaProducer<K, V> {
     this.producer = this.kafka.producer();
   }
 
-  async send(topicName: string, key: K, message: V): Promise<RecordMetadata[]> {
+  async send(topicName: string, key: K, message: V): Promise<void> {
     await this.producer.connect();
     try {
       const record: ProducerRecord = {
@@ -24,9 +24,8 @@ export class KafkaProducerImpl<K, V> implements KafkaProducer<K, V> {
         messages: [{ key: key.toString(), value: JSON.stringify(message) }],
       };
 
-      const result = await this.producer.send(record);
-
-      const metadata: RecordMetadata[] = result.map((result) => ({
+      const results = await this.producer.send(record);
+      const metadata: RecordMetadata[] = results.map((result) => ({
         topicName: result.topicName,
         partition: result.partition,
         offset: result.offset,
@@ -34,10 +33,11 @@ export class KafkaProducerImpl<K, V> implements KafkaProducer<K, V> {
         errorCode: result.errorCode,
       }));
       console.log(`Successfully sent message to Kafka:`, metadata);
-      return metadata;
     } catch (error) {
       console.error(`Failed to send message to Kafka:`, error);
       throw error;
+    } finally {
+      await this.close();
     }
   }
 

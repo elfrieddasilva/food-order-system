@@ -1,171 +1,157 @@
+import { PartitionAssigner, RetryOptions } from "kafkajs";
 export class KafkaConsumerConfigData {
-  private keyDeserializer: string;
-  private valueDeserializer: string;
-  private autoOffsetReset: string;
-  private specificAvroReaderKey: string;
-  private specificAvroReader: string;
-  private batchListener: boolean;
-  private autoStartup: boolean;
-  private concurrencyLevel: number;
-  private sessionTimeoutMs: number;
-  private heartbeatIntervalMs: number;
-  private maxPollIntervalMs: number;
-  private pollTimeoutMs: number;
-  private maxPollRecords: number;
-  private maxPartitionFetchBytesDefault: number;
-  private maxPartitionFetchBytesBoostFactor: number;
+  private groupId: string;
+  private partitionAssigners?: PartitionAssigner[];
+  private metadataMaxAge?: number;
+  private sessionTimeout?: number;
+  private rebalanceTimeout?: number;
+  private heartbeatInterval?: number;
+  private maxBytesPerPartition?: number;
+  private minBytes?: number;
+  private maxBytes?: number;
+  private maxWaitTimeInMs?: number;
+  private retry?: RetryOptions & { restartOnFailure?: (err: Error) => Promise<boolean> };
+  private allowAutoTopicCreation?: boolean;
+  private maxInFlightRequests?: number;
+  private readUncommitted?: boolean;
+  private rackId?: string;
 
   constructor(
-    keyDeserializer: string,
-    valueDeserializer: string,
-    autoOffsetReset: string,
-    specificAvroReaderKey: string,
-    specificAvroReader: string,
-    batchListener: boolean,
-    autoStartup: boolean,
-    concurrencyLevel: number,
-    sessionTimeoutMs: number,
-    heartbeatIntervalMs: number,
-    maxPollIntervalMs: number,
-    pollTimeoutMs: number,
-    maxPollRecords: number,
-    maxPartitionFetchBytesDefault: number,
-    maxPartitionFetchBytesBoostFactor: number,
+     groupId: string,
+     partitionAssigners?: PartitionAssigner[],
+     metadataMaxAge?: number,
+     sessionTimeout?: number,
+     rebalanceTimeout?: number,
+     heartbeatInterval?: number,
+     maxBytesPerPartition?: number,
+     minBytes?: number,
+     maxBytes?: number,
+     maxWaitTimeInMs?: number,
+     retry?: RetryOptions & { restartOnFailure?: (err: Error) => Promise<boolean> },
+     allowAutoTopicCreation?: boolean,
+     maxInFlightRequests?: number,
+     readUncommitted?: boolean,
+     rackId?: string,
   ) {
-    this.keyDeserializer = keyDeserializer;
-    this.valueDeserializer = valueDeserializer;
-    this.autoOffsetReset = autoOffsetReset;
-    this.specificAvroReaderKey = specificAvroReaderKey;
-    this.specificAvroReader = specificAvroReader;
-    this.batchListener = batchListener;
-    this.autoStartup = autoStartup;
-    this.concurrencyLevel = concurrencyLevel;
-    this.sessionTimeoutMs = sessionTimeoutMs;
-    this.heartbeatIntervalMs = heartbeatIntervalMs;
-    this.maxPollIntervalMs = maxPollIntervalMs;
-    this.pollTimeoutMs = pollTimeoutMs;
-    this.maxPollRecords = maxPollRecords;
-    this.maxPartitionFetchBytesDefault = maxPartitionFetchBytesDefault;
-    this.maxPartitionFetchBytesBoostFactor = maxPartitionFetchBytesBoostFactor;
+    this.groupId = groupId;
+    this.partitionAssigners = partitionAssigners;
+    this.metadataMaxAge = metadataMaxAge;
+    this.sessionTimeout = sessionTimeout;
+    this.rebalanceTimeout = rebalanceTimeout;
+    this.heartbeatInterval = heartbeatInterval;
+    this.maxBytesPerPartition = maxBytesPerPartition;
+    this.minBytes = minBytes;
+    this.maxBytes = maxBytes;
+    this.maxWaitTimeInMs = maxWaitTimeInMs;
+    this.retry = retry;
+    this.allowAutoTopicCreation = allowAutoTopicCreation;
+    this.maxInFlightRequests = maxInFlightRequests;
+    this.readUncommitted = readUncommitted;
+    this.rackId = rackId;
   }
 
-  public getKeyDeserializer(): string {
-    return this.keyDeserializer;
+  getGroupId(): string {
+    return this.groupId;
+  }
+  setGroupId(value: string): void {
+    this.groupId = value;
   }
 
-  public setKeyDeserializer(value: string): void {
-    this.keyDeserializer = value;
+  getPartitionAssigners(): PartitionAssigner[] | undefined {
+    return this.partitionAssigners;
+  }
+  setPartitionAssigners(value: PartitionAssigner[] | undefined): void {
+    this.partitionAssigners = value;
   }
 
-  public getValueDeserializer(): string {
-    return this.valueDeserializer;
+  getMetadataMaxAge(): number | undefined {
+    return this.metadataMaxAge;
+  }
+  setMetadataMaxAge(value: number | undefined): void {
+    this.metadataMaxAge = value;
   }
 
-  public setValueDeserializer(value: string): void {
-    this.valueDeserializer = value;
+  getSessionTimeout(): number | undefined {
+    return this.sessionTimeout;
+  }
+  setSessionTimeout(value: number | undefined): void {
+    this.sessionTimeout = value;
   }
 
-  public getAutoOffsetReset(): string {
-    return this.autoOffsetReset;
+  getRebalanceTimeout(): number | undefined {
+    return this.rebalanceTimeout;
+  }
+  setRebalanceTimeout(value: number | undefined): void {
+    this.rebalanceTimeout = value;
   }
 
-  public setAutoOffsetReset(value: string): void {
-    this.autoOffsetReset = value;
+  getHeartbeatInterval(): number | undefined {
+    return this.heartbeatInterval;
+  }
+  setHeartbeatInterval(value: number | undefined): void {
+    this.heartbeatInterval = value;
   }
 
-  public getSpecificAvroReaderKey(): string {
-    return this.specificAvroReaderKey;
+  getMaxBytesPerPartition(): number | undefined {
+    return this.maxBytesPerPartition;
+  }
+  setMaxBytesPerPartition(value: number | undefined): void {
+    this.maxBytesPerPartition = value;
   }
 
-  public setSpecificAvroReaderKey(value: string): void {
-    this.specificAvroReaderKey = value;
+  getMinBytes(): number | undefined {
+    return this.minBytes;
+  }
+  setMinBytes(value: number | undefined): void {
+    this.minBytes = value;
   }
 
-  public getSpecificAvroReader(): string {
-    return this.specificAvroReader;
+  getMaxBytes(): number | undefined {
+    return this.maxBytes;
+  }
+  setMaxBytes(value: number | undefined): void {
+    this.maxBytes = value;
   }
 
-  public setSpecificAvroReader(value: string): void {
-    this.specificAvroReader = value;
+  getMaxWaitTimeInMs(): number | undefined {
+    return this.maxWaitTimeInMs;
+  }
+  setMaxWaitTimeInMs(value: number | undefined): void {
+    this.maxWaitTimeInMs = value;
   }
 
-  public isBatchListener(): boolean {
-    return this.batchListener;
+  getRetry(): RetryOptions & { restartOnFailure?: (err: Error) => Promise<boolean> } | undefined {
+    return this.retry;
+  }
+  setRetry(value: RetryOptions & { restartOnFailure?: (err: Error) => Promise<boolean> } | undefined): void {
+    this.retry = value;
   }
 
-  public setBatchListener(value: boolean): void {
-    this.batchListener = value;
+  getAllowAutoTopicCreation(): boolean | undefined {
+    return this.allowAutoTopicCreation;
+  }
+  setAllowAutoTopicCreation(value: boolean | undefined): void {
+    this.allowAutoTopicCreation = value;
   }
 
-  public isAutoStartup(): boolean {
-    return this.autoStartup;
+  getMaxInFlightRequests(): number | undefined {
+    return this.maxInFlightRequests;
+  }
+  setMaxInFlightRequests(value: number | undefined): void {
+    this.maxInFlightRequests = value;
   }
 
-  public setAutoStartup(value: boolean): void {
-    this.autoStartup = value;
+  getReadUncommitted(): boolean | undefined {
+    return this.readUncommitted;
+  }
+  setReadUncommitted(value: boolean | undefined): void {
+    this.readUncommitted = value;
   }
 
-  public getConcurrencyLevel(): number {
-    return this.concurrencyLevel;
+  getRackId(): string | undefined {
+    return this.rackId;
   }
-
-  public setConcurrencyLevel(value: number): void {
-    this.concurrencyLevel = value;
-  }
-
-  public getSessionTimeoutMs(): number {
-    return this.sessionTimeoutMs;
-  }
-
-  public setSessionTimeoutMs(value: number): void {
-    this.sessionTimeoutMs = value;
-  }
-
-  public getHeartbeatIntervalMs(): number {
-    return this.heartbeatIntervalMs;
-  }
-
-  public setHeartbeatIntervalMs(value: number): void {
-    this.heartbeatIntervalMs = value;
-  }
-
-  public getMaxPollIntervalMs(): number {
-    return this.maxPollIntervalMs;
-  }
-
-  public setMaxPollIntervalMs(value: number): void {
-    this.maxPollIntervalMs = value;
-  }
-
-  public getPollTimeoutMs(): number {
-    return this.pollTimeoutMs;
-  }
-
-  public setPollTimeoutMs(value: number): void {
-    this.pollTimeoutMs = value;
-  }
-
-  public getMaxPollRecords(): number {
-    return this.maxPollRecords;
-  }
-
-  public setMaxPollRecords(value: number): void {
-    this.maxPollRecords = value;
-  }
-
-  public getMaxPartitionFetchBytesDefault(): number {
-    return this.maxPartitionFetchBytesDefault;
-  }
-
-  public setMaxPartitionFetchBytesDefault(value: number): void {
-    this.maxPartitionFetchBytesDefault = value;
-  }
-
-  public getMaxPartitionFetchBytesBoostFactor(): number {
-    return this.maxPartitionFetchBytesBoostFactor;
-  }
-
-  public setMaxPartitionFetchBytesBoostFactor(value: number): void {
-    this.maxPartitionFetchBytesBoostFactor = value;
+  setRackId(value: string | undefined): void {
+    this.rackId = value;
   }
 }

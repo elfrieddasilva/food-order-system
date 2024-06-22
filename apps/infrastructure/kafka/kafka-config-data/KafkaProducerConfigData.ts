@@ -1,105 +1,136 @@
+import { CompressionTypes, ICustomPartitioner, RetryOptions } from "kafkajs";
+
 export class KafkaProducerConfigData {
-  private keySerializerClass: string;
-  private valueSerializerClass: string;
-  private compressionType: string;
-  private acks: string;
-  private batchSize: number;
-  private batchSizeBoostFactor: number;
-  private lingerMs: number;
-  private requestTimeoutMs: number;
-  private retryCount: number;
+  private createPartitioner?: ICustomPartitioner;
+  private retry?: RetryOptions;
+  private metadataMaxAge?: number;
+  private allowAutoTopicCreation?: boolean;
+  private idempotent?: boolean;
+  private transactionalId?: string;
+  private transactionTimeout?: number;
+  private maxInFlightRequests?: number;
+  private compressionType?: CompressionTypes;
+  private acks?: number;
+  private batchSize?: number;
+  private timeoutMs?: number;
 
   constructor(
-    keySerializerClass: string,
-    valueSerializerClass: string,
-    compressionType: string,
-    acks: string,
-    batchSize: number,
-    batchSizeBoostFactor: number,
-    lingerMs: number,
-    requestTimeoutMs: number,
-    retryCount: number,
+    createPartitioner?: ICustomPartitioner,
+    retry?: RetryOptions,
+    metadataMaxAge?: number,
+    allowAutoTopicCreation?: boolean,
+    idempotent?: boolean,
+    transactionalId?: string,
+    transactionTimeout?: number,
+    maxInFlightRequests?: number,
+    compressionType?: CompressionTypes,
+    acks?: number,
+    batchSize?: number,
+    timeoutMs?: number
   ) {
-    this.keySerializerClass = keySerializerClass;
-    this.valueSerializerClass = valueSerializerClass;
+    this.createPartitioner = createPartitioner;
+    this.retry = retry;
+    this.metadataMaxAge = metadataMaxAge;
+    this.allowAutoTopicCreation = allowAutoTopicCreation;
+    this.idempotent = idempotent;
+    this.transactionalId = transactionalId;
+    this.transactionTimeout = transactionTimeout;
+    this.maxInFlightRequests = maxInFlightRequests;
     this.compressionType = compressionType;
     this.acks = acks;
     this.batchSize = batchSize;
-    this.batchSizeBoostFactor = batchSizeBoostFactor;
-    this.lingerMs = lingerMs;
-    this.requestTimeoutMs = requestTimeoutMs;
-    this.retryCount = retryCount;
+    this.timeoutMs = timeoutMs;
   }
 
-  public getKeySerializerClass(): string {
-    return this.keySerializerClass;
+  getCreatePartitioner(): ICustomPartitioner | undefined {
+    return this.createPartitioner;
+  }
+  setCreatePartitioner(value: ICustomPartitioner | undefined): void {
+    this.createPartitioner = value;
   }
 
-  public setKeySerializerClass(value: string): void {
-    this.keySerializerClass = value;
+  getRetry(): RetryOptions | undefined {
+    return this.retry;
+  }
+  setRetry(value: RetryOptions | undefined): void {
+    this.retry = value;
   }
 
-  public getValueSerializerClass(): string {
-    return this.valueSerializerClass;
+  getMetadataMaxAge(): number | undefined {
+    return this.metadataMaxAge;
+  }
+  setMetadataMaxAge(value: number | undefined): void {
+    this.metadataMaxAge = value;
   }
 
-  public setValueSerializerClass(value: string): void {
-    this.valueSerializerClass = value;
+  getAllowAutoTopicCreation(): boolean | undefined {
+    return this.allowAutoTopicCreation;
+  }
+  setAllowAutoTopicCreation(value: boolean | undefined): void {
+    this.allowAutoTopicCreation = value;
   }
 
-  public getCompressionType(): string {
-    return this.compressionType;
+  getIdempotent(): boolean | undefined {
+    return this.idempotent;
+  }
+  setIdempotent(value: boolean | undefined): void {
+    this.idempotent = value;
   }
 
-  public setCompressionType(value: string): void {
-    this.compressionType = value;
+  getTransactionalId(): string | undefined {
+    return this.transactionalId;
+  }
+  setTransactionalId(value: string | undefined): void {
+    this.transactionalId = value;
   }
 
-  public getAcks(): string {
+  getTransactionTimeout(): number | undefined {
+    return this.transactionTimeout;
+  }
+  setTransactionTimeout(value: number | undefined): void {
+    this.transactionTimeout = value;
+  }
+
+  getMaxInFlightRequests(): number | undefined {
+    return this.maxInFlightRequests;
+  }
+  setMaxInFlightRequests(value: number | undefined): void {
+    this.maxInFlightRequests = value;
+  }
+
+  getTimeoutMs(): number {
+    return this.timeoutMs;
+  }
+
+  setRequestTimeoutMs(value: number): void {
+    this.timeoutMs = value;
+  }
+
+  getAcks(): number {
     return this.acks;
   }
 
-  public setAcks(value: string): void {
+  setAcks(value: number): void {
     this.acks = value;
   }
 
-  public getBatchSize(): number {
+  getBatchSize(): number {
     return this.batchSize;
   }
 
-  public setBatchSize(value: number): void {
+  setBatchSize(value: number): void {
     this.batchSize = value;
   }
 
-  public getBatchSizeBoostFactor(): number {
-    return this.batchSizeBoostFactor;
+  getCompressionType(): CompressionTypes {
+    return this.compressionType;
   }
 
-  public setBatchSizeBoostFactor(value: number): void {
-    this.batchSizeBoostFactor = value;
+  setCompressionType(value: CompressionTypes): void {
+    this.compressionType = value;
   }
 
-  public getLingerMs(): number {
-    return this.lingerMs;
-  }
 
-  public setLingerMs(value: number): void {
-    this.lingerMs = value;
-  }
 
-  public getRequestTimeoutMs(): number {
-    return this.requestTimeoutMs;
-  }
-
-  public setRequestTimeoutMs(value: number): void {
-    this.requestTimeoutMs = value;
-  }
-
-  public getRetryCount(): number {
-    return this.retryCount;
-  }
-
-  public setRetryCount(value: number): void {
-    this.retryCount = value;
-  }
 }
+

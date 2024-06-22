@@ -22,7 +22,7 @@ export class KafkaMessageHelper {
       results.forEach((result) => {
         const { partition, offset } = result;
         console.info(
-          `Successfully sent ${avroModelName} message to Kafka: ` +
+          `Successfully sent ${avroModelName} message to Kafka for order id: ${orderId} ` +
             `Topic: ${topic}, Partition: ${partition}, Offset: ${offset}`,
         );
       });
