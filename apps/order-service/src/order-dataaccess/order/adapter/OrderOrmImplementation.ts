@@ -1,10 +1,14 @@
 import { Order, TrackingId } from '@app/order-domain';
 import { OrderDataAccessMapper } from '../mapper/OrderDataAccessMapper';
 import { OrderOrmRepository } from '../repository/OrderOrmRepository';
+import { Injectable } from '@nestjs/common';
+import {InjectRepository} from "@nestjs/typeorm"
+import { OrderEntity } from '../entity/OrderEntity';
 
+@Injectable()
 export class OrderOrmImplementation {
   constructor(
-    private readonly orderOrmRepository: OrderOrmRepository,
+    @InjectRepository(OrderEntity) private readonly orderOrmRepository: OrderOrmRepository,
     private readonly orderDataAccessMapper: OrderDataAccessMapper,
   ) {}
   async save(order: Order) {
