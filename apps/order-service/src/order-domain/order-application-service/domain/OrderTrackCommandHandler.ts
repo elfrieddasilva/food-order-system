@@ -22,7 +22,7 @@ export class OrderTrackCommandHandler {
   }
 
   trackOrder(trackOrderQuery: TrackOrderQuery): TrackOrderResponse {
-    const orderResult: Order | any = this.orderRepository.findByTrackingId(
+    const orderResult = this.orderRepository.findByTrackingId(
       new TrackingId(trackOrderQuery.getOrderTrackingId()),
     );
     if (!orderResult) {
