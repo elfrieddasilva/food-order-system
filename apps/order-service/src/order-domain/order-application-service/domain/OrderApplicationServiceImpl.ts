@@ -5,7 +5,9 @@ import { TrackOrderResponse } from '@app/order-domain';
 import { OrderApplicationService } from '@app/order-domain';
 import { OrderCreateCommandHandler } from './OrderCreateCommandHandler';
 import { OrderTrackCommandHandler } from './OrderTrackCommandHandler';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OrderApplicationServiceImpl implements OrderApplicationService {
   private readonly orderCreateCommandHandler: OrderCreateCommandHandler;
   private readonly orderTrackCommandHandler: OrderTrackCommandHandler;

@@ -7,12 +7,14 @@ import {
   RestaurantId,
 } from '@app/common';
 import { Order, StreetAddress, Restaurant, Product, OrderItem as OrderItemEntity  } from '../../../';
-import { randomUUID } from 'crypto'; 
+import { generateUUID } from '@app/common'; 
 import { OrderAddress } from '../dto/create/OrderAddress';
 import { OrderItemApp } from '../dto/create/OrderItem';
 import { CreateOrderResponse } from '../dto/create/CreateOrderResponse';
 import { TrackOrderResponse } from '../dto/track/TrackOrderResponse';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OrderDataMapper {
   createOrderCommandToRestaurant(
     createOrderCommand: CreateOrderCommand,
@@ -51,7 +53,7 @@ export class OrderDataMapper {
 
   private orderAddressToStreetAddress(orderAddress: OrderAddress) {
     return new StreetAddress(
-      randomUUID(),
+      generateUUID(),
       orderAddress.getStreet(),
       orderAddress.getPostalCode(),
       orderAddress.getCity(),

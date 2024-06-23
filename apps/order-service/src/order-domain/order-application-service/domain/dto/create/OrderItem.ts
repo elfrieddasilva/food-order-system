@@ -1,5 +1,5 @@
 import { IsDefined } from 'class-validator';
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
 
 export class OrderItemApp {
   @IsDefined()

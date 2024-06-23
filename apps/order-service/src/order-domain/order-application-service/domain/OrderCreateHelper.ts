@@ -6,11 +6,13 @@ import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderCreatedEvent } from '@app/common';
 import { Order } from '@app/order-domain-core';
 import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class OrderCreateHelper {
   private readonly orderDomainService: OrderDomainService;
-
+ 
   private readonly orderRepository: OrderRepository;
 
   private readonly customerRepository: CustomerRepository;

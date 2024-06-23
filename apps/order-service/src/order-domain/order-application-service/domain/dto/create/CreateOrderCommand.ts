@@ -1,4 +1,4 @@
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
 import { IsDefined } from 'class-validator';
 import { OrderItemApp as OrderItem } from './OrderItem';
 import { OrderAddress } from './OrderAddress';

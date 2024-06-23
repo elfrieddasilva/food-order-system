@@ -1,5 +1,5 @@
 import { OrderStatus } from '@app/common';
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
 import { IsDefined } from 'class-validator';
 
 export class CreateOrderResponse {

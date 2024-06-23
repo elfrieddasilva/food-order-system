@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/food-ordering-system/src",
+  "sourceRoot": "apps/order-service/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/food-ordering-system/tsconfig.app.json"
+    "tsConfigPath": "apps/order-service/tsconfig.app.json"
   },
   "projects": {
     "common": {
@@ -46,5 +46,5 @@
     }
   },
   "monorepo": true,
-  "root": "apps/food-ordering-system"
+  "root": "apps/order-service"
 }

@@ -5,7 +5,9 @@ import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderRepository } from './ports/output/repository/OrderRepository';
 import { Order } from '@app/order-domain-core';
 import { OrderNotFoundException } from '../../';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OrderTrackCommandHandler {
   private readonly orderDataMapper: OrderDataMapper;
 

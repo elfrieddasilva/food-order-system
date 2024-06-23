@@ -9,7 +9,7 @@ import {
 import { OrderItemId, StreetAddress, TrackingId } from '../valueObject';
 import { OrderItem } from './OrderItem';
 import { OrderDomainException } from '../exception/OrderDomainException';
-import { randomUUID } from 'crypto';
+import { generateUUID } from '@app/common';
 
 export class Order extends AggregateRoot<OrderId> {
   private readonly customerId: CustomerId;
@@ -50,8 +50,8 @@ export class Order extends AggregateRoot<OrderId> {
   }
 
   initializeOrder() {
-    this.setId(new OrderId(randomUUID()));
-    this.trackingId = new TrackingId(randomUUID());
+    this.setId(new OrderId(generateUUID()));
+    this.trackingId = new TrackingId(generateUUID());
     this.orderStatus = OrderStatus.PENDING;
     this.initializeOrderItems();
   }
@@ -156,7 +156,7 @@ export class Order extends AggregateRoot<OrderId> {
   private initializeOrderItems() {
     let itemId = 1;
     this.items.forEach((orderItem) => {
-      orderItem.initializeOrderItem(this.getId(), new OrderItemId(itemId++));
+      orderItem.initializeOrderItem(this.getId(), new OrderItemId((itemId++).toString()));
     });
   }
 

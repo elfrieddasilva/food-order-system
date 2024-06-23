@@ -3,16 +3,15 @@ import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
 import { CreateOrderResponse } from './dto/create/CreateOrderResponse';
 import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderCreateHelper } from './OrderCreateHelper';
-import { Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OrderCreateCommandHandler {
   private readonly orderCreateHelper: OrderCreateHelper;
 
   private readonly orderDataMapper: OrderDataMapper;
 
   private readonly orderCreatedPaymentRequestMessagePublisher: OrderCreatedPaymentRequestMessagePublisher;
-
-  private logger = new Logger();
 
   constructor(
     orderCreateHelper: OrderCreateHelper,

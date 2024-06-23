@@ -1,4 +1,4 @@
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
 import { BaseId } from './BaseId';
 
 export class CustomerId extends BaseId<UUID> {

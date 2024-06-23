@@ -1,6 +1,6 @@
 import { IsDefined } from 'class-validator';
 import { OrderStatus } from '@app/common';
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
 
 export class TrackOrderResponse {
   @IsDefined()
@@ -18,10 +18,22 @@ export class TrackOrderResponse {
     this.orderStatus = orderStatus;
     this.failureMessages = failureMessages;
   }
-
     static builder() {
     return new Builder();
   }
+
+  getOrderTrackingId() {
+    return this.orderTrackingId;
+  }
+
+  getOrderStatus() {
+    return this.orderStatus;
+  }
+
+  getFailureMessages() {
+    return this.failureMessages;
+  }
+
 }
 
 class Builder {

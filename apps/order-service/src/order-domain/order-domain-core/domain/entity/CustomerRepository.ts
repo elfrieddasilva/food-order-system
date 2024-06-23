@@ -1,4 +1,4 @@
-import { UUID } from 'crypto';
+import { UUID } from '@app/common';
 import { Customer } from './Customer';
 
 export interface CustomerRepository {

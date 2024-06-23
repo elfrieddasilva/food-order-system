@@ -14,7 +14,7 @@ export interface KafkaCustomMessageFormat<K, V> {
   key?: K;
   value: V;
 }
-export class KafkaProducerConfig<K, V> {
+export class KafkaProducerConfig<K=any, V=any> {
   private kafkaConfigData: KafkaConfigData;
   private kafkaProducerConfigData: KafkaProducerConfigData;
   private producer: Producer;

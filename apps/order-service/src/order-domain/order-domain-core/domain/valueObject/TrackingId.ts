@@ -1,5 +1,4 @@
-import { BaseId } from '@app/common';
-import { UUID } from 'crypto';
+import { BaseId, UUID } from '@app/common';
 
 export class TrackingId extends BaseId<UUID> {
   constructor(value: UUID) {
