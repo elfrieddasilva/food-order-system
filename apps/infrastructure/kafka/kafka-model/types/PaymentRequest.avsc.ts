@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-export type PaymentRequestModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.PaymentRequestModel;
 
-export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   export const PaymentOrderStatusSchema =
     '{"type":"enum","name":"PaymentOrderStatus","symbols":["PENDING","CANCELLED"]}';
   export const PaymentOrderStatusName =
@@ -20,9 +17,15 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     orderId: string;
     price: number;
     createdAt: number;
-    paymentOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentOrderStatus;
+    paymentOrderStatus: PaymentOrderStatus;
   }
-}
+
+
+  export enum PaymentOrderStatusEnum {
+    PENDING= "PENDING",
+    CANCELLED="CANCELLED"
+  }
+
 
 export class PaymentRequestAvroModel {
   private id: string;
@@ -31,7 +34,7 @@ export class PaymentRequestAvroModel {
   private orderId: string;
   private price: number;
   private createdAt: number;
-  private paymentOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentOrderStatus;
+  private paymentOrderStatus: PaymentOrderStatus;
 
   getId(): string {
     return this.id;
@@ -81,12 +84,12 @@ export class PaymentRequestAvroModel {
     this.createdAt = value;
   }
 
-  getPaymentOrderStatus(): ComFoodOrderingSystemKafkaOrderAvroModel.PaymentOrderStatus {
+  getPaymentOrderStatus(): PaymentOrderStatus {
     return this.paymentOrderStatus;
   }
 
   setPaymentOrderStatus(
-    value: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentOrderStatus,
+    value: PaymentOrderStatus,
   ): void {
     this.paymentOrderStatus = value;
   }
@@ -103,7 +106,7 @@ class Builder {
   private _orderId: string;
   private _price: number;
   private _createdAt: number;
-  private _paymentOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentOrderStatus;
+  private _paymentOrderStatus: PaymentOrderStatus;
 
   id(id: string): Builder {
     this._id = id;
@@ -136,7 +139,7 @@ class Builder {
   }
 
   paymentOrderStatus(
-    paymentOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentOrderStatus,
+    paymentOrderStatus: PaymentOrderStatus,
   ): Builder {
     this._paymentOrderStatus = paymentOrderStatus;
     return this;

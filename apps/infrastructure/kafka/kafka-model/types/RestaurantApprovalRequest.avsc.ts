@@ -1,9 +1,4 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-
-export type RestaurantApprovalRequestModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantApprovalRequestModel;
-
-export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   export const RestaurantOrderStatusSchema =
     '{"type":"enum","name":"RestaurantOrderStatus","symbols":["PAID"]}';
   export const RestaurantOrderStatusName =
@@ -13,11 +8,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     '{"name":"Product","type":"record","fields":[{"name":"id","type":"string","logicalType":"uuid"},{"name":"quantity","type":"int"}]}';
   export const ProductName =
     'com.food.ordering.system.kafka.order.avro.model.Product';
-  export interface Product {
-    id: string;
-    quantity: number;
-  }
-  export const RestaurantApprovalRequestAvroModelSchema =
+   export const RestaurantApprovalRequestAvroModelSchema =
     '{"namespace":"com.food.ordering.system.kafka.order.avro.model","type":"record","name":"RestaurantApprovalRequestAvroModel","fields":[{"name":"id","type":{"type":"string","logicalType":"uuid"}},{"name":"sagaId","type":{"type":"string","logicalType":"uuid"}},{"name":"restaurantId","type":{"type":"string","logicalType":"uuid"}},{"name":"orderId","type":{"type":"string","logicalType":"uuid"}},{"name":"restaurantOrderStatus","type":{"type":"enum","name":"RestaurantOrderStatus","symbols":["PAID"]}},{"name":"products","type":{"type":"array","items":{"name":"Product","type":"record","fields":[{"name":"id","type":"string","logicalType":"uuid"},{"name":"quantity","type":"int"}]}}},{"name":"price","type":{"type":"long","logicalType":"decimal","precision":10,"scale":2}},{"name":"createdAt","type":{"type":"long","logicalType":"timestamp-millis"}}]}';
   export const RestaurantApprovalRequestAvroModelName =
     'com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel';
@@ -26,20 +17,73 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     sagaId: string;
     restaurantId: string;
     orderId: string;
-    restaurantOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantOrderStatus;
-    products: ComFoodOrderingSystemKafkaOrderAvroModel.Product[];
+    restaurantOrderStatus: RestaurantOrderStatus;
+    products: Product[];
     price: number;
     createdAt: number;
   }
-}
+
+  export enum RestaurantOrderStatusEnum {
+    PAID="PAID"
+  }
+
+  export class Product {
+    private id: string;
+    private quantity: number;
+  
+    getId(): string {
+      return this.id;
+    }
+  
+    setId(id: string): void {
+      this.id = id;
+    }
+  
+    getQuantity(): number {
+      return this.quantity;
+    }
+  
+    setQuantity(quantity: number): void {
+      this.quantity = quantity;
+    }
+
+    static builder() {
+      return new ProductBuilder();
+    }
+
+  }
+  
+  class ProductBuilder {
+    private _id: string;
+    private _quantity: number;
+  
+    id(id: string): ProductBuilder {
+      this._id = id;
+      return this;
+    }
+  
+    quantity(quantity: number): ProductBuilder {
+      this._quantity = quantity;
+      return this;
+    }
+  
+    build(): Product {
+      const product = new Product();
+      product.setId(this._id);
+      product.setQuantity(this._quantity);
+      return product;
+    }
+  }
+  
+
 
 export class RestaurantApprovalRequestAvroModel {
   private id: string;
   private sagaId: string;
   private restaurantId: string;
   private orderId: string;
-  private restaurantOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantOrderStatus;
-  private products: ComFoodOrderingSystemKafkaOrderAvroModel.Product[];
+  private restaurantOrderStatus: RestaurantOrderStatus;
+  private products: Product[];
   private price: number;
   private createdAt: number;
 
@@ -75,19 +119,19 @@ export class RestaurantApprovalRequestAvroModel {
     this.orderId = value;
   }
 
-  getRestaurantOrderStatus(): ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantOrderStatus {
+  getRestaurantOrderStatus(): RestaurantOrderStatus {
     return this.restaurantOrderStatus;
   }
 
-  setRestaurantOrderStatus(value: ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantOrderStatus): void {
+  setRestaurantOrderStatus(value: RestaurantOrderStatus): void {
     this.restaurantOrderStatus = value;
   }
 
-  getProducts(): ComFoodOrderingSystemKafkaOrderAvroModel.Product[] {
+  getProducts(): Product[] {
     return this.products;
   }
 
-  setProducts(value: ComFoodOrderingSystemKafkaOrderAvroModel.Product[]): void {
+  setProducts(value: Product[]): void {
     this.products = value;
   }
 
@@ -116,8 +160,8 @@ class Builder {
   private _sagaId: string;
   private _restaurantId: string;
   private _orderId: string;
-  private _restaurantOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantOrderStatus;
-  private _products: ComFoodOrderingSystemKafkaOrderAvroModel.Product[];
+  private _restaurantOrderStatus: RestaurantOrderStatus;
+  private _products: Product[];
   private _price: number;
   private _createdAt: number;
 
@@ -141,12 +185,12 @@ class Builder {
     return this;
   }
 
-  restaurantOrderStatus(restaurantOrderStatus: ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantOrderStatus): Builder {
+  restaurantOrderStatus(restaurantOrderStatus: RestaurantOrderStatus): Builder {
     this._restaurantOrderStatus = restaurantOrderStatus;
     return this;
   }
 
-  products(products: ComFoodOrderingSystemKafkaOrderAvroModel.Product[]): Builder {
+  products(products: Product[]): Builder {
     this._products = products;
     return this;
   }

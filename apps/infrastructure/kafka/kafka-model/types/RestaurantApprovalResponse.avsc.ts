@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-export type RestaurantApprovalResponseModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantApprovalResponseModel;
 
-export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
+
   export const OrderApprovalStatusSchema =
     '{"type":"enum","name":"OrderApprovalStatus","symbols":["APPROVED","REJECTED"]}';
   export const OrderApprovalStatusName =
@@ -19,10 +17,10 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     restaurantId: string;
     orderId: string;
     createdAt: number;
-    orderApprovalStatus: ComFoodOrderingSystemKafkaOrderAvroModel.OrderApprovalStatus;
+    orderApprovalStatus: OrderApprovalStatus;
     failureMessages: string[];
   }
-}
+
 
 export class RestaurantApprovalResponseAvroModel {
   private id: string;
@@ -30,7 +28,7 @@ export class RestaurantApprovalResponseAvroModel {
   private restaurantId: string;
   private orderId: string;
   private createdAt: number;
-  private orderApprovalStatus: ComFoodOrderingSystemKafkaOrderAvroModel.OrderApprovalStatus;
+  private orderApprovalStatus: OrderApprovalStatus;
   private failureMessages: string[];
 
   getId(): string {
@@ -73,12 +71,12 @@ export class RestaurantApprovalResponseAvroModel {
     this.createdAt = value;
   }
 
-  getOrderApprovalStatus(): ComFoodOrderingSystemKafkaOrderAvroModel.OrderApprovalStatus {
+  getOrderApprovalStatus(): OrderApprovalStatus {
     return this.orderApprovalStatus;
   }
 
   setOrderApprovalStatus(
-    value: ComFoodOrderingSystemKafkaOrderAvroModel.OrderApprovalStatus,
+    value: OrderApprovalStatus,
   ): void {
     this.orderApprovalStatus = value;
   }
@@ -90,54 +88,59 @@ export class RestaurantApprovalResponseAvroModel {
   setFailureMessages(value: string[]): void {
     this.failureMessages = value;
   }
+
+  static builder() {
+    return new Builder();
+  }
+
 }
 
-export class RestaurantApprovalResponseAvroModelBuilder {
+class Builder {
   private _id: string;
   private _sagaId: string;
   private _restaurantId: string;
   private _orderId: string;
   private _createdAt: number;
-  private _orderApprovalStatus: ComFoodOrderingSystemKafkaOrderAvroModel.OrderApprovalStatus;
+  private _orderApprovalStatus: OrderApprovalStatus;
   private _failureMessages: string[];
 
-  id(id: string): RestaurantApprovalResponseAvroModelBuilder {
+  id(id: string) {
     this._id = id;
     return this;
   }
 
-  sagaId(sagaId: string): RestaurantApprovalResponseAvroModelBuilder {
+  sagaId(sagaId: string) {
     this._sagaId = sagaId;
     return this;
   }
 
   restaurantId(
     restaurantId: string,
-  ): RestaurantApprovalResponseAvroModelBuilder {
+  ) {
     this._restaurantId = restaurantId;
     return this;
   }
 
-  orderId(orderId: string): RestaurantApprovalResponseAvroModelBuilder {
+  orderId(orderId: string) {
     this._orderId = orderId;
     return this;
   }
 
-  createdAt(createdAt: number): RestaurantApprovalResponseAvroModelBuilder {
+  createdAt(createdAt: number) {
     this._createdAt = createdAt;
     return this;
   }
 
   orderApprovalStatus(
-    orderApprovalStatus: ComFoodOrderingSystemKafkaOrderAvroModel.OrderApprovalStatus,
-  ): RestaurantApprovalResponseAvroModelBuilder {
+    orderApprovalStatus: OrderApprovalStatus,
+  ) {
     this._orderApprovalStatus = orderApprovalStatus;
     return this;
   }
 
   failureMessages(
     failureMessages: string[],
-  ): RestaurantApprovalResponseAvroModelBuilder {
+  ) {
     this._failureMessages = failureMessages;
     return this;
   }

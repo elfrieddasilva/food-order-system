@@ -1,4 +1,4 @@
 export enum OrderApprovalStatus {
-    APPROVED,
-    REJECTED
+    APPROVED = "APPROVED",
+    REJECTED = "REJECTED"
 }

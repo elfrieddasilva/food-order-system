@@ -1,7 +1,7 @@
 import { DomainEvent } from "../DomainEvent";
 
 
-export interface DomainEventPublisher <T extends DomainEvent<T>> {
-    publish(domainEvent: T): void;
+export abstract class DomainEventPublisher <T extends DomainEvent<T>> {
+    abstract publish(domainEvent: T): Promise<void>;
 
 }

@@ -3,5 +3,5 @@ import { OrderCreatedEvent } from '@app/common';
 
 export interface OrderCreatedPaymentRequestMessagePublisher
   extends DomainEvent<OrderCreatedEvent> {
-  publish(orderCreatedEvent: OrderCreatedEvent): void;
+  publish(orderCreatedEvent: OrderCreatedEvent): Promise<void>;
 }

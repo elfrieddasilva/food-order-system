@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-export type PaymentResponseModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.PaymentResponseModel;
-
-export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   export const PaymentStatusSchema =
     '{"type":"enum","name":"PaymentStatus","symbols":["COMPLETED","CANCELLED","FAILED"]}';
   export const PaymentStatusName =
@@ -21,10 +17,9 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     orderId: string;
     price: number;
     createdAt: number;
-    paymentStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentStatus;
+    paymentStatus: PaymentStatus;
     failureMessages: string[];
   }
-}
 
 export class PaymentResponseAvroModel {
   private id: string;
@@ -34,7 +29,7 @@ export class PaymentResponseAvroModel {
   private orderId: string;
   private price: number;
   private createdAt: number;
-  private paymentStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentStatus;
+  private paymentStatus: PaymentStatus;
   private failureMessages: string[];
 
 
@@ -94,11 +89,11 @@ export class PaymentResponseAvroModel {
     this.createdAt = value;
   }
 
-  getPaymentStatus(): ComFoodOrderingSystemKafkaOrderAvroModel.PaymentStatus {
+  getPaymentStatus(): PaymentStatus {
     return this.paymentStatus;
   }
 
-  setPaymentStatus(value: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentStatus): void {
+  setPaymentStatus(value: PaymentStatus): void {
     this.paymentStatus = value;
   }
 
@@ -123,7 +118,7 @@ export class PaymentResponseAvroModel {
   private _orderId: string;
   private _price: number;
   private _createdAt: number;
-  private _paymentStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentStatus;
+  private _paymentStatus: PaymentStatus;
   private _failureMessages: string[];
 
   id(id: string) {
@@ -161,7 +156,7 @@ export class PaymentResponseAvroModel {
     return this;
   }
 
-  paymentStatus(paymentStatus: ComFoodOrderingSystemKafkaOrderAvroModel.PaymentStatus) {
+  paymentStatus(paymentStatus: PaymentStatus) {
     this._paymentStatus = paymentStatus;
     return this;
   }

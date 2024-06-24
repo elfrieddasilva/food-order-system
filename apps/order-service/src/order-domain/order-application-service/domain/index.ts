@@ -7,3 +7,4 @@ export * from "./RestaurantApprovalResponseMessageListenerImpl";
 export * from "./dto";
 export * from "./mapper";
 export * from "./ports"
+export * from "./config";
