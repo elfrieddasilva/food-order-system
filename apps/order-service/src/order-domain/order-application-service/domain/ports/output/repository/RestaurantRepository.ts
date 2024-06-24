@@ -1,7 +1,5 @@
-import { Restaurant } from "@app/order-domain-core";
+import { Restaurant } from '@app/order-domain-core';
 
-
-export interface RestaurantRepository {
-    findRestaurantInformation(restaurant: Restaurant): Restaurant | void;
-    
+export abstract class RestaurantRepository {
+  abstract findRestaurantInformation(restaurant: Restaurant): Promise<Restaurant>;
 }

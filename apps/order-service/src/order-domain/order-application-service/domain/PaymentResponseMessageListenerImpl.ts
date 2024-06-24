@@ -1,12 +1,13 @@
+import { PaymentResponse } from './dto';
 import { PaymentResponseMessageListener } from './ports/input';
 
 export class PaymentResponseMessageListenerImpl
   implements PaymentResponseMessageListener
 {
-  paymentCompleted(paymentResponse: PaymentResponse): void {
+  async paymentCompleted(paymentResponse: PaymentResponse) {
     throw new Error('Method not implemented.');
   }
-  paymentCancelled(paymentResponse: PaymentResponse): void {
+  async paymentCancelled(paymentResponse: PaymentResponse) {
     throw new Error('Method not implemented.');
   }
 }

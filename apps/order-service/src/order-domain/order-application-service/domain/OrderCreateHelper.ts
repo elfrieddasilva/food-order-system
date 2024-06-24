@@ -1,4 +1,4 @@
-import { OrderDomainException, OrderDomainService } from "../../";
+import { OrderDomainException, OrderDomainService } from '../../';
 import { OrderRepository } from './ports/output/repository/OrderRepository';
 import { CustomerRepository } from '@app/order-domain-core';
 import { RestaurantRepository } from './ports/output/repository/RestaurantRepository';
@@ -7,12 +7,12 @@ import { OrderCreatedEvent } from '@app/common';
 import { Order } from '@app/order-domain-core';
 import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
 import { UUID } from '@app/common';
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class OrderCreateHelper {
   private readonly orderDomainService: OrderDomainService;
- 
+
   private readonly orderRepository: OrderRepository;
 
   private readonly customerRepository: CustomerRepository;
@@ -20,6 +20,8 @@ export class OrderCreateHelper {
   private readonly restaurantRepository: RestaurantRepository;
 
   private readonly orderDataMapper: OrderDataMapper;
+
+  private logger = new Logger(OrderCreateHelper.name);
 
   constructor(
     orderDomainService: OrderDomainService,
@@ -35,55 +37,72 @@ export class OrderCreateHelper {
     this.restaurantRepository = restaurantRepository;
   }
 
-  persistOrder(createOrderCommand: CreateOrderCommand): OrderCreatedEvent {
-    this.checkCustomer(createOrderCommand.getCustomerId());
-    const restaurant = this.checkRestaurant(createOrderCommand);
-    const order =
-      this.orderDataMapper.createOrderCommandToOrder(createOrderCommand);
-    const orderCreatedEvent = this.orderDomainService.validateAndInitiateOrder(
-      order,
-      restaurant, 
-    );
-    this.saveOrder(order);
-    console.info(
-      `Order is created with id: ${orderCreatedEvent.getOrder().getId().getValue()}`,
-    );
-    return orderCreatedEvent;
+  async persistOrder(createOrderCommand: CreateOrderCommand) {
+    try {
+
+      await this.checkCustomer(createOrderCommand.getCustomerId());
+      const restaurant = await this.checkRestaurant(createOrderCommand);
+      const order =
+        this.orderDataMapper.createOrderCommandToOrder(createOrderCommand);
+      const orderCreatedEvent = this.orderDomainService.validateAndInitiateOrder(
+        order,
+        restaurant,
+      );
+      await this.saveOrder(order);
+      this.logger.log(
+        `Order is created with id: ${orderCreatedEvent.getOrder().getId().getValue()}`,
+      );
+      return orderCreatedEvent;
+      
+    } catch (error) {
+      throw new OrderDomainException(error);
+    }
   }
 
-  private checkCustomer(customerId: UUID) {
-    const customer = this.customerRepository.findCustomer(customerId);
-    if (!customer) {
-      console.warn(`Could not find customer with id ${customerId}`);
+  private async checkCustomer(customerId: UUID) {
+    try {
+      await this.customerRepository.findCustomer(customerId);
+    } catch (error) {
+      this.logger.warn(`Could not find customer with id ${customerId}`);
       throw new OrderDomainException(
         `Could not find customer with id ${customerId}`,
       );
     }
   }
 
-  private checkRestaurant(createOrderCommand: CreateOrderCommand) {
+  private async checkRestaurant(createOrderCommand: CreateOrderCommand) {
     const restaurant =
       this.orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
-    const optionalRestaurant =
-      this.restaurantRepository.findRestaurantInformation(restaurant);
-    if (!optionalRestaurant) {
-      console.warn(
-        `Could not find restaurant with id ${createOrderCommand.getRestaurantId()}`,
-      );
-      throw new OrderDomainException(
-        `Could not find restaurant with id ${createOrderCommand.getRestaurantId()}`,
-      );
+    try {
+      const optionalRestaurant =
+        await this.restaurantRepository.findRestaurantInformation(restaurant);
+      if (!optionalRestaurant) {
+        console.warn(
+          `Could not find restaurant with id ${createOrderCommand.getRestaurantId()}`,
+        );
+        throw new OrderDomainException(
+          `Could not find restaurant with id ${createOrderCommand.getRestaurantId()}`,
+        );
+      }
+      return optionalRestaurant;
+    } catch (error) {
+      throw new OrderDomainException(error);
     }
-    return optionalRestaurant;
   }
 
-  private saveOrder(order: Order): Order {
-    const orderResult = this.orderRepository.save(order);
-    if (!orderResult || orderResult === null) {
-      console.error('Could not save order!');
-      throw new OrderDomainException('Could not save order!');
+  private async saveOrder(order: Order) {
+    try {
+      const orderResult = await this.orderRepository.save(order);
+      if (!orderResult) {
+        this.logger.error('Could not save order!');
+        throw new OrderDomainException('Could not save order!');
+      }
+      this.logger.log(
+        `Order is saved with id: ${orderResult.getId().getValue()}`,
+      );
+      return orderResult;
+    } catch (error) {
+      throw new OrderDomainException(error);
     }
-    console.info(`Order is saved with id: ${orderResult.getId().getValue()}`);
-    return orderResult;
   }
 }

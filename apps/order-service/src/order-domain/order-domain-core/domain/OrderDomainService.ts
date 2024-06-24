@@ -4,16 +4,16 @@ import { Restaurant } from './entity/Restaurant';
 import { OrderPaidEvent } from '@app/common';
 import { OrderCancelledEvent } from '@app/common';
 
-export interface OrderDomainService {
-  validateAndInitiateOrder(
+export abstract class OrderDomainService {
+  abstract  validateAndInitiateOrder(
     order: Order,
     restaurant: Restaurant,
   ): OrderCreatedEvent;
-  payOrder(order: Order): OrderPaidEvent;
-  approveOrder(order: Order): void;
-  cancelOrderPayment(
+  abstract payOrder(order: Order): OrderPaidEvent;
+  abstract approveOrder(order: Order): void;
+  abstract cancelOrderPayment(
     order: Order,
     failureMessages: string[],
   ): OrderCancelledEvent;
-  cancelOrder(order: Order, failureMessages: string[]): void;
+  abstract cancelOrder(order: Order, failureMessages: string[]): void;
 }

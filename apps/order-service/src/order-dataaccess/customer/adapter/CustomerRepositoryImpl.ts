@@ -8,11 +8,13 @@ export class CustomerRepositoryImpl extends CustomerRepository {
   ) {
     super();
   }
-  findCustomer(customerId: UUID): void | Customer {
-    let result: Customer;
-    this.customerOrmImplementation
-      .findCustomer(customerId)
-      .then((foundCustomer) => (result = foundCustomer));
-    return result!;
+  async findCustomer(customerId: UUID) {
+    try {
+      const customer =
+        await this.customerOrmImplementation.findCustomer(customerId);
+      return customer;
+    } catch (error) {
+      throw error;
+    }
   }
 }

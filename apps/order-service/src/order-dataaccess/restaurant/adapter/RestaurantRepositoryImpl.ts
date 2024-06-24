@@ -7,11 +7,13 @@ export class RestaurantRepositoryImpl implements RestaurantRepository {
   constructor(
     private readonly restaurantOrmImplementation: RestaurantOrmImplementation,
   ) {}
-  findRestaurantInformation(restaurant: Restaurant): void | Restaurant {
-    let result: Restaurant;
-    this.restaurantOrmImplementation
-      .findRestaurantInformation(restaurant)
-      .then((foundRestaurant) => (result = foundRestaurant));
-    return result;
+  async findRestaurantInformation(restaurant: Restaurant) {
+    try {
+      return await this.restaurantOrmImplementation.findRestaurantInformation(
+        restaurant,
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 }

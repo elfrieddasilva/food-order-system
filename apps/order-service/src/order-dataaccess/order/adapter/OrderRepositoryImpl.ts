@@ -7,18 +7,19 @@ export class OrderRepositoryImpl extends OrderRepository {
   constructor(private readonly orderOrmImplementation: OrderOrmImplementation) {
     super();
   }
-  save(order: Order): Order {
-    let result: Order;
-    this.orderOrmImplementation
-      .save(order)
-      .then((savedOrder) => (result = savedOrder));
-    return result!;
+  async save(order: Order)  {
+    try {
+      return await this.orderOrmImplementation.save(order);
+    } catch (error) {
+      throw error;
+    }
+
   }
-  findByTrackingId(trackingId: TrackingId): void | Order {
-    let result: Order;
-    this.orderOrmImplementation
-      .findByTrackingId(trackingId)
-      .then((foundOrder) => (result = foundOrder));
-    return result!;
+  async findByTrackingId(trackingId: TrackingId) {
+    try {
+      return await this.orderOrmImplementation.findByTrackingId(trackingId);
+    } catch (error) {
+      throw error;
+    }
   }
 }

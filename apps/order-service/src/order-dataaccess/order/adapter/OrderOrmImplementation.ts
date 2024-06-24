@@ -12,17 +12,27 @@ export class OrderOrmImplementation {
     private readonly orderDataAccessMapper: OrderDataAccessMapper,
   ) {}
   async save(order: Order) {
-    return this.orderDataAccessMapper.orderEntityToOrder(
-      await this.orderOrmRepository.save(
-        this.orderDataAccessMapper.orderToOrderEntity(order),
-      ),
-    );
+    try {
+      return this.orderDataAccessMapper.orderEntityToOrder(
+        await this.orderOrmRepository.save(
+          this.orderDataAccessMapper.orderToOrderEntity(order),
+        ),
+      );
+    } catch (error) {
+      throw error;
+    }
+
   }
   async findByTrackingId(trackingId: TrackingId) {
-    return this.orderDataAccessMapper.orderEntityToOrder(
-      await this.orderOrmRepository.findOneBy({
-        trackingId: trackingId.getValue(),
-      }),
-    );
+    try {
+      return this.orderDataAccessMapper.orderEntityToOrder(
+        await this.orderOrmRepository.findOneBy({
+          trackingId: trackingId.getValue(),
+        }),
+      );
+    } catch (error) {
+      throw error;
+    }
+
   }
 }

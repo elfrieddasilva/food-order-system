@@ -5,13 +5,14 @@ import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderRepository } from './ports/output/repository/OrderRepository';
 import { Order } from '@app/order-domain-core';
 import { OrderNotFoundException } from '../../';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class OrderTrackCommandHandler {
   private readonly orderDataMapper: OrderDataMapper;
 
   private readonly orderRepository: OrderRepository;
+  private logger =new Logger(OrderTrackCommandHandler.name);
 
   constructor(
     orderDataMapper: OrderDataMapper,
@@ -21,18 +22,24 @@ export class OrderTrackCommandHandler {
     this.orderRepository = orderRepository;
   }
 
-  trackOrder(trackOrderQuery: TrackOrderQuery): TrackOrderResponse {
-    const orderResult = this.orderRepository.findByTrackingId(
-      new TrackingId(trackOrderQuery.getOrderTrackingId()),
-    );
-    if (!orderResult) {
-      console.warn(
-        `Could not find order with id ${trackOrderQuery.getOrderTrackingId()}`,
+  async trackOrder(
+    trackOrderQuery: TrackOrderQuery,
+  ): Promise<TrackOrderResponse> {
+    try {
+      const orderResult = await this.orderRepository.findByTrackingId(
+        new TrackingId(trackOrderQuery.getOrderTrackingId()),
       );
-      throw new OrderNotFoundException(
-        `Could not find order with tracking id: ${trackOrderQuery.getOrderTrackingId()}`,
-      );
+      if (!orderResult) {
+        this.logger.warn(
+          `Could not find order with id ${trackOrderQuery.getOrderTrackingId()}`,
+        );
+        throw new OrderNotFoundException(
+          `Could not find order with tracking id: ${trackOrderQuery.getOrderTrackingId()}`,
+        );
+      }
+      return this.orderDataMapper.orderToTrackOrderResponse(orderResult);
+    } catch (error) {
+      throw new OrderNotFoundException(error);
     }
-    return this.orderDataMapper.orderToTrackOrderResponse(orderResult);
   }
 }

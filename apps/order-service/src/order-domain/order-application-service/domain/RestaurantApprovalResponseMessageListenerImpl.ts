@@ -4,10 +4,10 @@ import { RestaurantApprovalResponseMessageListener } from './ports/input';
 export class RestaurantApprovalResponseMessageListenerImpl
   implements RestaurantApprovalResponseMessageListener
 {
-  orderApproved(restaurantApprovalResponse: RestaurantApprovalResponse): void {
+  async orderApproved(restaurantApprovalResponse: RestaurantApprovalResponse) {
     throw new Error('Method not implemented.');
   }
-  orderRejected(restaurantApprovalResponse: RestaurantApprovalResponse): void {
+  async orderRejected(restaurantApprovalResponse: RestaurantApprovalResponse) {
     throw new Error('Method not implemented.');
   }
 }
