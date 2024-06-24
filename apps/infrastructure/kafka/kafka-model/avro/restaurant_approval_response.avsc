@@ -34,8 +34,8 @@
         {
             "name": "createdAt",
             "type": {
-                "type": "long",
-                "logicalType": "timestamp-millis"
+                "type": "int",
+                "logicalType": "date"
             }
         },
         {
