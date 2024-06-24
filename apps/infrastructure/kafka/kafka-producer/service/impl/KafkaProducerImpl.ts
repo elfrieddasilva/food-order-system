@@ -7,12 +7,14 @@ import {
 } from 'kafkajs';
 import { KafkaProducer } from '../KafkaProducer';
 import { KafkaProducerException } from '../../exception/KafkaProducerException';
+import { Logger } from '@nestjs/common';
 
 export class KafkaProducerImpl<K = any, V = any>
   implements KafkaProducer<K, V>
 {
   private kafka: Kafka;
   private producer: Producer;
+  private  readonly logger = new Logger();
 
   constructor(kafkaConfig: KafkaConfig) {
     this.kafka = new Kafka(kafkaConfig);
@@ -21,7 +23,7 @@ export class KafkaProducerImpl<K = any, V = any>
 
   async send(topicName: string, key: K, message: V): Promise<void> {
     await this.producer.connect();
-    console.info(`Sending message: ${message} to topic: ${topicName}`);
+    this.logger.log(`Sending message: ${message} to topic: ${topicName}`);
     try {
       const record: ProducerRecord = {
         topic: topicName,
@@ -29,11 +31,11 @@ export class KafkaProducerImpl<K = any, V = any>
       };
 
       await this.producer.send(record);
-      console.log(
+      this.logger.log(
         `Successfully sent message: ${message} to topic: ${topicName}`,
       );
     } catch (error) {
-      console.error(
+      this.logger.error(
         `Error on kafka producer with key: ${key}, message: ${message}, error: ${error}`,
       );
       throw new KafkaProducerException(
@@ -46,11 +48,11 @@ export class KafkaProducerImpl<K = any, V = any>
 
   async close(): Promise<void> {
     try {
-      console.info("Closing kafka producer");
+      this.logger.log("Closing kafka producer");
       await this.producer.disconnect();
-      console.log('Kafka producer disconnected successfully.');
+      this.logger.log('Kafka producer disconnected successfully.');
     } catch (error) {
-      console.error('Error disconnecting Kafka producer:', error);
+      this.logger.error('Error disconnecting Kafka producer:', error);
       throw new KafkaProducerException(
         `Error disconnecting Kafka producer, ${error}`,
       );

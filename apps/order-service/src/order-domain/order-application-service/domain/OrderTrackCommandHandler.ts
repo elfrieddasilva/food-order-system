@@ -3,7 +3,6 @@ import { TrackOrderQuery } from './dto/track/TrackOrderQuery';
 import { TrackOrderResponse } from './dto/track/TrackOrderResponse';
 import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderRepository } from './ports/output/repository/OrderRepository';
-import { Order } from '@app/order-domain-core';
 import { OrderNotFoundException } from '../../';
 import { Injectable, Logger } from '@nestjs/common';
 
@@ -12,7 +11,7 @@ export class OrderTrackCommandHandler {
   private readonly orderDataMapper: OrderDataMapper;
 
   private readonly orderRepository: OrderRepository;
-  private logger =new Logger(OrderTrackCommandHandler.name);
+  private logger = new Logger(OrderTrackCommandHandler.name);
 
   constructor(
     orderDataMapper: OrderDataMapper,
@@ -39,7 +38,7 @@ export class OrderTrackCommandHandler {
       }
       return this.orderDataMapper.orderToTrackOrderResponse(orderResult);
     } catch (error) {
-      throw new OrderNotFoundException(error);
+      throw error;
     }
   }
 }

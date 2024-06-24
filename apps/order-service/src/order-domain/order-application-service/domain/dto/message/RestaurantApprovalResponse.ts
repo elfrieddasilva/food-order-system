@@ -69,7 +69,7 @@ export class RestaurantApprovalResponse {
   }
 }
 
-export class Builder {
+class Builder {
   private _id: string;
   private _sagaId: string;
   private _orderId: string;

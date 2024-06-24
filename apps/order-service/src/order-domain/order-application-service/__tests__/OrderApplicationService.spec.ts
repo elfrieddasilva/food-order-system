@@ -211,57 +211,42 @@ describe('OrderApplicationService Test', () => {
   });
 
   describe('Test CreateOrder', () => {
-    it('should create order successfully', () => {
-      const createOrderResponse =
-        orderApplicationService.createOrder(createOrderCommand);
+    it('should create order successfully', async () => {
+      const createOrderResponse = await orderApplicationService.createOrder(createOrderCommand);
       expect(createOrderResponse.getOrderStatus()).toBe(OrderStatus.PENDING);
-      expect(createOrderResponse.getMessage()).toBe(
-        'Order Created Successfully',
-      );
+      expect(createOrderResponse.getMessage()).toBe('Order Created Successfully');
       expect(createOrderResponse.getOrderTrackingId()).toBeDefined();
     });
 
-    it('should throw OrderDomainException for wrong total price', () => {
-      expect(() => {
-        orderApplicationService.createOrder(createOrderCommandWrongPrice);
-      }).toThrow(OrderDomainException);
+    it('should throw OrderDomainException for wrong total price', async () => {
+      await expect(orderApplicationService.createOrder(createOrderCommandWrongPrice)).rejects.toThrow(OrderDomainException);
 
       try {
-        orderApplicationService.createOrder(createOrderCommandWrongPrice);
+        await orderApplicationService.createOrder(createOrderCommandWrongPrice);
       } catch (error) {
         if (error instanceof OrderDomainException) {
-          expect(error.message).toBe(
-            'Total price: 250 is not equal to Order items total: 200!',
-          );
+          expect(error.message).toBe('Total price: 250 is not equal to Order items total: 200!');
         } else {
           throw error;
         }
       }
     });
 
-    it('should throw OrderDomainException for wrong product price', () => {
-      expect(() => {
-        orderApplicationService.createOrder(
-          createOrderCommandWrongProductPrice,
-        );
-      }).toThrow(OrderDomainException);
+    it('should throw OrderDomainException for wrong product price', async () => {
+      await expect(orderApplicationService.createOrder(createOrderCommandWrongProductPrice)).rejects.toThrow(OrderDomainException);
 
       try {
-        orderApplicationService.createOrder(
-          createOrderCommandWrongProductPrice,
-        );
+        await orderApplicationService.createOrder(createOrderCommandWrongProductPrice);
       } catch (error) {
         if (error instanceof OrderDomainException) {
-          expect(error.message).toBe(
-            'Order item price: 60 is not valid for product ' + PRODUCT_ID,
-          );
+          expect(error.message).toBe('Order item price: 60 is not valid for product ' + PRODUCT_ID);
         } else {
           throw error;
         }
       }
     });
 
-    it('should create order with passive restaurant', () => {
+    it('should throw OrderDomainException for creating order with passive restaurant', async () => {
       const restaurantResponse = Restaurant.builder()
         .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
         .products([
@@ -271,21 +256,14 @@ describe('OrderApplicationService Test', () => {
         .active(false)
         .build();
       (restaurantRepository.findRestaurantInformation as jest.Mock).mockReturnValue(restaurantResponse);
-      expect(() => {
-        orderApplicationService.createOrder(
-          createOrderCommand
-        );
-      }).toThrow(OrderDomainException);
+
+      await expect(orderApplicationService.createOrder(createOrderCommand)).rejects.toThrow(OrderDomainException);
 
       try {
-        orderApplicationService.createOrder(
-          createOrderCommandWrongProductPrice,
-        );
+        await orderApplicationService.createOrder(createOrderCommand);
       } catch (error) {
         if (error instanceof OrderDomainException) {
-          expect(error.message).toBe(
-            "Restaurant with id " + RESTAURANT_ID + " is currently not active!"
-          );
+          expect(error.message).toBe("Restaurant with id " + RESTAURANT_ID + " is currently not active!");
         } else {
           throw error;
         }

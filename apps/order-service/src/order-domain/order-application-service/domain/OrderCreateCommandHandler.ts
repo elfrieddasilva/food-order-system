@@ -3,7 +3,7 @@ import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
 import { CreateOrderResponse } from './dto/create/CreateOrderResponse';
 import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderCreateHelper } from './OrderCreateHelper';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class OrderCreateCommandHandler {
@@ -12,6 +12,8 @@ export class OrderCreateCommandHandler {
   private readonly orderDataMapper: OrderDataMapper;
 
   private readonly orderCreatedPaymentRequestMessagePublisher: OrderCreatedPaymentRequestMessagePublisher;
+
+  private readonly logger = new Logger(OrderCreateCommandHandler.name);
 
   constructor(
     orderCreateHelper: OrderCreateHelper,
@@ -24,10 +26,10 @@ export class OrderCreateCommandHandler {
       orderCreatedPaymentRequestMessagePublisher;
   }
 
-  createOrder(createOrderCommand: CreateOrderCommand): CreateOrderResponse {
-    const orderCreatedEvent =
-      this.orderCreateHelper.persistOrder(createOrderCommand);
-    console.info(
+  async createOrder(createOrderCommand: CreateOrderCommand) {
+    try {
+      const orderCreatedEvent = await this.orderCreateHelper.persistOrder(createOrderCommand);
+    this.logger.log(
       `Order is created with id: ${orderCreatedEvent.getOrder().getId().getValue()}`,
     );
     this.orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
@@ -35,5 +37,9 @@ export class OrderCreateCommandHandler {
       orderCreatedEvent.getOrder(),
       "Order Created Successfully"
     );
+    } catch (error) {
+      throw error;
+    }
+    
   }
 }

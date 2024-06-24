@@ -39,7 +39,7 @@ export class OrderGlobalExceptionHandler extends GlobalExceptionHandler {
         .build();
     }
 
-    console.error(exception);
+    this.logger.error(exception);
 
     response.status(status).json({
       ...errorResponse,

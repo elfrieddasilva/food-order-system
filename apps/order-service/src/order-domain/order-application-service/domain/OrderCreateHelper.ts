@@ -1,10 +1,10 @@
 import { OrderDomainException, OrderDomainService } from '../../';
 import { OrderRepository } from './ports/output/repository/OrderRepository';
-import { CustomerRepository } from '@app/order-domain-core';
+import { CustomerRepository, Restaurant } from '../../';
 import { RestaurantRepository } from './ports/output/repository/RestaurantRepository';
 import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderCreatedEvent } from '@app/common';
-import { Order } from '@app/order-domain-core';
+import { Order } from '../../';
 import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
 import { UUID } from '@app/common';
 import { Injectable, Logger } from '@nestjs/common';
@@ -37,9 +37,8 @@ export class OrderCreateHelper {
     this.restaurantRepository = restaurantRepository;
   }
 
-  async persistOrder(createOrderCommand: CreateOrderCommand) {
+  async persistOrder(createOrderCommand: CreateOrderCommand): Promise<OrderCreatedEvent> {
     try {
-
       await this.checkCustomer(createOrderCommand.getCustomerId());
       const restaurant = await this.checkRestaurant(createOrderCommand);
       const order =
@@ -55,7 +54,7 @@ export class OrderCreateHelper {
       return orderCreatedEvent;
       
     } catch (error) {
-      throw new OrderDomainException(error);
+      throw error;
     }
   }
 
@@ -70,14 +69,14 @@ export class OrderCreateHelper {
     }
   }
 
-  private async checkRestaurant(createOrderCommand: CreateOrderCommand) {
+  private async checkRestaurant(createOrderCommand: CreateOrderCommand): Promise<Restaurant> {
     const restaurant =
       this.orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
     try {
       const optionalRestaurant =
         await this.restaurantRepository.findRestaurantInformation(restaurant);
       if (!optionalRestaurant) {
-        console.warn(
+        this.logger.warn(
           `Could not find restaurant with id ${createOrderCommand.getRestaurantId()}`,
         );
         throw new OrderDomainException(
@@ -86,7 +85,7 @@ export class OrderCreateHelper {
       }
       return optionalRestaurant;
     } catch (error) {
-      throw new OrderDomainException(error);
+      throw error;
     }
   }
 
@@ -102,7 +101,7 @@ export class OrderCreateHelper {
       );
       return orderResult;
     } catch (error) {
-      throw new OrderDomainException(error);
+      throw error;
     }
   }
 }

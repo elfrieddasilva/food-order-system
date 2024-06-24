@@ -5,12 +5,14 @@ import {
     HttpException,
     HttpStatus,
     BadRequestException,
+    Logger,
   } from '@nestjs/common';
   import { Response } from 'express';
   import { ErrorDTO } from './ErrorDTO';
   
   @Catch()
   export class GlobalExceptionHandler implements ExceptionFilter {
+    readonly logger = new Logger();
     catch(exception: unknown, host: ArgumentsHost) {
       const ctx = host.switchToHttp();
       const response = ctx.getResponse<Response>();
@@ -38,7 +40,7 @@ import {
         .build();
       }
   
-      console.error(exception);
+      this.logger.error(exception);
   
       response.status(status).json({
         ...errorResponse,

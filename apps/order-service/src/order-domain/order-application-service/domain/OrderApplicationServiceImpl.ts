@@ -9,22 +9,16 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class OrderApplicationServiceImpl implements OrderApplicationService {
-  private readonly orderCreateCommandHandler: OrderCreateCommandHandler;
-  private readonly orderTrackCommandHandler: OrderTrackCommandHandler;
-
   constructor(
-    orderCreateCommandHandler: OrderCreateCommandHandler,
-    orderTrackCommandHandler: OrderTrackCommandHandler,
-  ) {
-    this.orderCreateCommandHandler = orderCreateCommandHandler;
-    this.orderTrackCommandHandler = orderTrackCommandHandler;
+    private readonly orderCreateCommandHandler: OrderCreateCommandHandler,
+    private readonly orderTrackCommandHandler: OrderTrackCommandHandler,
+  ) {}
+
+  async createOrder(createOrderCommand: CreateOrderCommand) {
+    return await this.orderCreateCommandHandler.createOrder(createOrderCommand);
   }
 
-  createOrder(createOrderCommand: CreateOrderCommand): CreateOrderResponse {
-    return this.orderCreateCommandHandler.createOrder(createOrderCommand);
-  }
-  
-  trackOrder(trackOrderQuery: TrackOrderQuery): TrackOrderResponse {
-    return this.orderTrackCommandHandler.trackOrder(trackOrderQuery);
+  async trackOrder(trackOrderQuery: TrackOrderQuery) {
+    return await this.orderTrackCommandHandler.trackOrder(trackOrderQuery);
   }
 }
