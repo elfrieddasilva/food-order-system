@@ -35,7 +35,7 @@ export class PayOrderKafkaMessagePublisher implements OrderPaidRestaurantRequest
         this.logger.error(
           `Error while sending RestaurantApprovalRequestAvroModel message to Kafka with order id: ${orderId}, error: ${error}`,
         );
-        throw error;
+        throw error; 
       }
 
         
