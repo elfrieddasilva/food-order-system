@@ -1,6 +1,6 @@
 import { RestaurantApprovalResponse } from '@app/order-domain';
 
-export interface RestaurantApprovalResponseMessageListener {
-  orderApproved(restaurantApprovalResponse: RestaurantApprovalResponse): void;
-  orderRejected(restaurantApprovalResponse: RestaurantApprovalResponse): void;
+export abstract class RestaurantApprovalResponseMessageListener {
+  abstract orderApproved(restaurantApprovalResponse: RestaurantApprovalResponse): Promise<void>;;
+  abstract orderRejected(restaurantApprovalResponse: RestaurantApprovalResponse): Promise<void>;;
 }

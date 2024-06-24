@@ -22,6 +22,8 @@ export class Order extends AggregateRoot<OrderId> {
   private orderStatus: OrderStatus;
   private failureMessages: string[];
 
+  public static readonly FAILURE_MESSAGE_DELIMITER = ",";
+
   constructor(
     orderId: OrderId,
     customerId: CustomerId,

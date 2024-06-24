@@ -1,8 +1,8 @@
-export interface KafkaConsumer<T = any> {
-  receive(
+export abstract class KafkaConsumer<T> {
+  abstract receive(
     messages: T[],
     keys: string[],
     partitions: number[],
     offsets: number[],
-  ): void;
+  ): Promise<void>;
 }
