@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-export type RestaurantApprovalRequestAvroModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantApprovalRequestAvroModel;
+export type RestaurantApprovalRequestModel =
+  ComFoodOrderingSystemKafkaOrderAvroModel.RestaurantApprovalRequestModel;
 
 export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   export const RestaurantOrderStatusSchema =
@@ -21,7 +21,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     '{"namespace":"com.food.ordering.system.kafka.order.avro.model","type":"record","name":"RestaurantApprovalRequestAvroModel","fields":[{"name":"id","type":{"type":"string","logicalType":"uuid"}},{"name":"sagaId","type":{"type":"string","logicalType":"uuid"}},{"name":"restaurantId","type":{"type":"string","logicalType":"uuid"}},{"name":"orderId","type":{"type":"string","logicalType":"uuid"}},{"name":"restaurantOrderStatus","type":{"type":"enum","name":"RestaurantOrderStatus","symbols":["PAID"]}},{"name":"products","type":{"type":"array","items":{"name":"Product","type":"record","fields":[{"name":"id","type":"string","logicalType":"uuid"},{"name":"quantity","type":"int"}]}}},{"name":"price","type":{"type":"long","logicalType":"decimal","precision":10,"scale":2}},{"name":"createdAt","type":{"type":"long","logicalType":"timestamp-millis"}}]}';
   export const RestaurantApprovalRequestAvroModelName =
     'com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel';
-  export interface RestaurantApprovalRequestAvroModel {
+  export interface RestaurantApprovalRequestModel {
     id: string;
     sagaId: string;
     restaurantId: string;
@@ -33,7 +33,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   }
 }
 
-export class RestaurantApprovalRequestModel {
+export class RestaurantApprovalRequestAvroModel {
   private id: string;
   private sagaId: string;
   private restaurantId: string;
@@ -161,8 +161,8 @@ class Builder {
     return this;
   }
 
-  build(): RestaurantApprovalRequestModel {
-    const model = new RestaurantApprovalRequestModel();
+  build(): RestaurantApprovalRequestAvroModel {
+    const model = new RestaurantApprovalRequestAvroModel();
     model.setId(this._id);
     model.setSagaId(this._sagaId);
     model.setRestaurantId(this._restaurantId);

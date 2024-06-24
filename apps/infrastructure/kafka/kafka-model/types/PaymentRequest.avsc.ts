@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-export type PaymentRequestAvroModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.PaymentRequestAvroModel;
+export type PaymentRequestModel =
+  ComFoodOrderingSystemKafkaOrderAvroModel.PaymentRequestModel;
 
 export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   export const PaymentOrderStatusSchema =
@@ -13,7 +13,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     '{"namespace":"com.food.ordering.system.kafka.order.avro.model","type":"record","name":"PaymentRequestAvroModel","fields":[{"name":"id","type":{"type":"string","logicalType":"uuid"}},{"name":"sagaId","type":{"type":"string","logicalType":"uuid"}},{"name":"customerId","type":{"type":"string","logicalType":"uuid"}},{"name":"orderId","type":{"type":"string","logicalType":"uuid"}},{"name":"price","type":{"type":"long","logicalType":"decimal","precision":10,"scale":2}},{"name":"createdAt","type":{"type":"int","logicalType":"date"}},{"name":"paymentOrderStatus","type":{"type":"enum","name":"PaymentOrderStatus","symbols":["PENDING","CANCELLED"]}}]}';
   export const PaymentRequestAvroModelName =
     'com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel';
-  export interface PaymentRequestAvroModel {
+  export interface PaymentRequestModel {
     id: string;
     sagaId: string;
     customerId: string;
@@ -24,7 +24,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   }
 }
 
-export class PaymentRequestModel {
+export class PaymentRequestAvroModel {
   private id: string;
   private sagaId: string;
   private customerId: string;
@@ -142,8 +142,8 @@ class Builder {
     return this;
   }
 
-  build(): PaymentRequestModel {
-    const model = new PaymentRequestModel();
+  build(): PaymentRequestAvroModel {
+    const model = new PaymentRequestAvroModel();
     model.setId(this._id);
     model.setSagaId(this._sagaId);
     model.setCustomerId(this._customerId);

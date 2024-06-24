@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
-export type PaymentResponseAvroModel =
-  ComFoodOrderingSystemKafkaOrderAvroModel.PaymentResponseAvroModel;
+export type PaymentResponseModel =
+  ComFoodOrderingSystemKafkaOrderAvroModel.PaymentResponseModel;
 
 export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   export const PaymentStatusSchema =
@@ -13,7 +13,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
     '{"namespace":"com.food.ordering.system.kafka.order.avro.model","type":"record","name":"PaymentResponseAvroModel","fields":[{"name":"id","type":{"type":"string","logicalType":"uuid"}},{"name":"sagaId","type":{"type":"string","logicalType":"uuid"}},{"name":"paymentId","type":{"type":"string","logicalType":"uuid"}},{"name":"customerId","type":{"type":"string","logicalType":"uuid"}},{"name":"orderId","type":{"type":"string","logicalType":"uuid"}},{"name":"price","type":{"type":"long","logicalType":"decimal","precision":10,"scale":2}},{"name":"createdAt","type":{"type":"long","logicalType":"timestamp-millis"}},{"name":"paymentStatus","type":{"type":"enum","name":"PaymentStatus","symbols":["COMPLETED","CANCELLED","FAILED"]}},{"name":"failureMessages","type":{"type":"array","items":{"type":"string"}}}]}';
   export const PaymentResponseAvroModelName =
     'com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel';
-  export interface PaymentResponseAvroModel {
+  export interface PaymentResponseModel {
     id: string;
     sagaId: string;
     paymentId: string;
@@ -26,7 +26,7 @@ export namespace ComFoodOrderingSystemKafkaOrderAvroModel {
   }
 }
 
-export class PaymentResponseModel {
+export class PaymentResponseAvroModel {
   private id: string;
   private sagaId: string;
   private paymentId: string;
@@ -171,8 +171,8 @@ export class PaymentResponseModel {
     return this;
   }
 
-  build(): PaymentResponseModel {
-    const model = new PaymentResponseModel();
+  build(): PaymentResponseAvroModel {
+    const model = new PaymentResponseAvroModel();
     model.setId(this._id);
     model.setSagaId(this._sagaId);
     model.setPaymentId(this._paymentId);
