@@ -1,88 +1,107 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryColumn, Column } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { OrderEntity } from './OrderEntity';
 import { UUID } from '@app/common';
 
 @Entity({ name: 'order_items' })
 export class OrderItemEntity {
-  @PrimaryColumn()
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: UUID;
 
-  @PrimaryColumn()
-  @ManyToOne(() => OrderEntity, (order) => order.items, { cascade: true })
-  @JoinColumn({ name: 'ORDER_ID' })
+  @Column('uuid')
+  orderId: UUID;
+
+  @ManyToOne(() => OrderEntity, (order) => order.items)
+  @JoinColumn({ name: 'orderId' })
   order: OrderEntity;
-  @Column()
+
+  @Column('uuid')
   productId: UUID;
-  @Column()
+
+  @Column('float')
   price: number;
-  @Column()
+
+  @Column('int')
   quantity: number;
-  @Column()
+
+  @Column('float')
   subTotal: number;
 
-  public getId(): string {
+  public getId(): UUID {
     return this.id;
+  }
+
+  public getOrderId(): UUID {
+    return this.orderId;
   }
 
   public getOrder(): OrderEntity {
     return this.order;
   }
-  public setId(id: string): void {
+
+  public setId(id: UUID): void {
     this.id = id;
+  }
+
+  public setOrderId(orderId: UUID): void {
+    this.orderId = orderId;
   }
 
   public setOrder(order: OrderEntity): void {
     this.order = order;
   }
 
-
-  getProductId() {
+  public getProductId(): UUID {
     return this.productId;
   }
 
-  setProductId(productId: UUID) {
+  public setProductId(productId: UUID): void {
     this.productId = productId;
   }
 
-  getPrice() {
+  public getPrice(): number {
     return this.price;
   }
 
-  setPrice(price: number) {
+  public setPrice(price: number): void {
     this.price = price;
   }
 
-  getQuantity() {
+  public getQuantity(): number {
     return this.quantity;
   }
 
-  setQuantity(quantity: number) {
+  public setQuantity(quantity: number): void {
     this.quantity = quantity;
   }
 
-  getSubTotal() {
+  public getSubTotal(): number {
     return this.subTotal;
   }
 
-  setSubTotal(subTotal: number) {
+  public setSubTotal(subTotal: number): void {
     this.subTotal = subTotal;
   }
 
-  public static builder() {
+  public static builder(): OrderItemEntityBuilder {
     return new OrderItemEntityBuilder();
   }
 }
-
 class OrderItemEntityBuilder {
-  private _id: string;
+  private _id: UUID;
+  private _orderId: UUID;
   private _order: OrderEntity;
   private _productId: UUID;
   private _price: number;
   private _quantity: number;
   private _subTotal: number;
 
-  public id(id: string): OrderItemEntityBuilder {
+  public id(id: UUID): OrderItemEntityBuilder {
     this._id = id;
+    return this;
+  }
+
+  public orderId(orderId: UUID): OrderItemEntityBuilder {
+    this._orderId = orderId;
     return this;
   }
 
@@ -90,35 +109,36 @@ class OrderItemEntityBuilder {
     this._order = order;
     return this;
   }
-  productId(val: UUID) {
+
+  public productId(val: UUID): OrderItemEntityBuilder {
     this._productId = val;
     return this;
   }
 
-  price(val: number) {
+  public price(val: number): OrderItemEntityBuilder {
     this._price = val;
     return this;
   }
 
-  quantity(val: number) {
+  public quantity(val: number): OrderItemEntityBuilder {
     this._quantity = val;
     return this;
   }
 
-  subTotal(val: number) {
+  public subTotal(val: number): OrderItemEntityBuilder {
     this._subTotal = val;
     return this;
   }
 
-
   public build(): OrderItemEntity {
     const orderItem = new OrderItemEntity();
     orderItem.setId(this._id);
+    orderItem.setOrderId(this._orderId);
     orderItem.setOrder(this._order);
     orderItem.setProductId(this._productId);
     orderItem.setPrice(this._price);
     orderItem.setQuantity(this._quantity);
-    orderItem.setSubTotal(this._subTotal)
+    orderItem.setSubTotal(this._subTotal);
     return orderItem;
   }
 }

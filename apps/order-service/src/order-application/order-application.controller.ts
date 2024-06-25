@@ -17,7 +17,7 @@ export class OrderController {
     this.logger.log(
       `Creating order for customer: ${createOrderCommand.getCustomerId()}`,
     );
-    const createOrderResponse =
+    const createOrderResponse = await
       this.orderApplicationService.createOrder(createOrderCommand);
     this.logger.log(
       `Order created with tracking id: ${createOrderResponse.getOrderTrackingId()}`,
@@ -27,7 +27,7 @@ export class OrderController {
 
   @Get(':trackingId')
   async getOrderByTracking(@Param() trackingId: UUID) {
-    const trackingOrderResponse = this.orderApplicationService.trackOrder(
+    const trackingOrderResponse = await this.orderApplicationService.trackOrder(
       TrackOrderQuery.builder().orderTrackingId(trackingId).build(),
     );
     this.logger.log(`Returning order status with tracking id: ${trackingOrderResponse.getOrderTrackingId()}`);

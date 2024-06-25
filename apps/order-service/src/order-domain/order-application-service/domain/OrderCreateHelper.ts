@@ -9,7 +9,6 @@ import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
 import { UUID } from '@app/common';
 import { Injectable, Logger } from '@nestjs/common';
 
-@Injectable()
 export class OrderCreateHelper {
   private readonly orderDomainService: OrderDomainService;
 

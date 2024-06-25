@@ -1,7 +1,7 @@
 import { DomainEvent } from '@app/common';
 import { OrderCreatedEvent } from '@app/common';
 
-export interface OrderCreatedPaymentRequestMessagePublisher
+export abstract class OrderCreatedPaymentRequestMessagePublisher
   extends DomainEvent<OrderCreatedEvent> {
-  publish(orderCreatedEvent: OrderCreatedEvent): Promise<void>;
+  abstract publish(orderCreatedEvent: OrderCreatedEvent): Promise<void>;
 }

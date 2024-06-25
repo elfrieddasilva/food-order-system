@@ -2,7 +2,7 @@ import { Order, OrderRepository, TrackingId } from '@app/order-domain';
 import { OrderOrmImplementation } from './OrderOrmImplementation';
 import { Injectable } from '@nestjs/common';
 
-@Injectable()
+
 export class OrderRepositoryImpl extends OrderRepository {
   constructor(private readonly orderOrmImplementation: OrderOrmImplementation) {
     super();

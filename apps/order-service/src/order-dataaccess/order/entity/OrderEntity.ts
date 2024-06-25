@@ -12,19 +12,19 @@ import { OrderItemEntity } from './OrderItemEntity';
 
 @Entity({ name: 'orders' })
 export class OrderEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: UUID;
 
-  @Column()
+  @Column('uuid')
   customerId: UUID;
 
-  @Column()
+  @Column('uuid')
   restaurantId: UUID;
 
-  @Column()
+  @Column('uuid')
   trackingId: UUID;
 
-  @Column()
+  @Column('float')
   price: number;
 
   @Column('enum', {

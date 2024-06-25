@@ -1,3 +1,3 @@
-export interface DomainEvent<T> {
+export abstract class DomainEvent<T> {
     
 }

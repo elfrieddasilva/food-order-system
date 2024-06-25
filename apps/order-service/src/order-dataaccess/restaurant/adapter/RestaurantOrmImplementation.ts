@@ -7,7 +7,7 @@ import { RestaurantEntity } from '../entity/RestaurantEntity';
 import { Restaurant } from '@app/order-domain';
 import { In } from 'typeorm';
 
-@Injectable()
+
 export class RestaurantOrmImplementation {
   constructor(
     @InjectRepository(RestaurantEntity)

@@ -4,7 +4,7 @@ import { CustomerDataAccessMapper } from '../mapper/CustomerDataAccessMapper';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomerEntity } from '../entity/CustomerEntity';
 import { Injectable } from '@nestjs/common';
-@Injectable()
+
 export class CustomerOrmImplementation {
   constructor(
     @InjectRepository(CustomerEntity) private readonly customerOrmRepository: CustomerOrmRepository,

@@ -5,7 +5,7 @@ import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderCreateHelper } from './OrderCreateHelper';
 import { Injectable, Logger } from '@nestjs/common';
 
-@Injectable()
+
 export class OrderCreateCommandHandler {
   private readonly orderCreateHelper: OrderCreateHelper;
 

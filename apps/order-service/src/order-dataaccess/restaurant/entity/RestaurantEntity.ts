@@ -1,12 +1,12 @@
-import { UUID } from '@app/common';
+import { UUID } from '@app/common'; // Ensure this type aligns with TypeORM's uuid type
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'order_restaurant_m_view', schema: 'restaurant' })
 export class RestaurantEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   restaurantId: UUID;
 
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   productId: UUID;
 
   @Column()
@@ -18,7 +18,7 @@ export class RestaurantEntity {
   @Column()
   productName: string;
 
-  @Column()
+  @Column('float')
   productPrice: number;
 
   public getRestaurantId(): UUID {
@@ -69,12 +69,12 @@ export class RestaurantEntity {
     this.productPrice = value;
   }
 
-  builder() {
-    return new Builder();
+  public static builder() {
+    return new RestaurantEntityBuilder();
   }
 }
 
-class Builder {
+class RestaurantEntityBuilder {
   private _restaurantId: UUID;
   private _productId: UUID;
   private _restaurantName: string;

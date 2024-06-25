@@ -6,7 +6,7 @@ import { KafkaProducer } from "apps/infrastructure/kafka/kafka-producer/service/
 import { OrderMessagingDataMapper } from "../mapper/OrderMessagingDataMapper";
 import { OrderServiceConfigData } from "@app/order-domain";
 
-@Injectable()
+
 export class PayOrderKafkaMessagePublisher implements OrderPaidRestaurantRequestMessagePublisher {
     private logger = new Logger(PayOrderKafkaMessagePublisher.name);
 

@@ -5,7 +5,7 @@ import { PaymentResponseAvroModel } from 'apps/infrastructure/kafka/kafka-model/
 import { OrderMessagingDataMapper } from '../mapper/OrderMessagingDataMapper';
 import { PaymentStatus } from '@app/common';
 
-@Injectable()
+
 export class PaymentResponseKafkaResponseListener
   implements KafkaConsumer<PaymentResponseAvroModel>
 {

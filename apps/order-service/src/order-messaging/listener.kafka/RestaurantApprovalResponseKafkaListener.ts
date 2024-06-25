@@ -8,7 +8,7 @@ import { RestaurantApprovalResponseAvroModel } from 'apps/infrastructure/kafka/k
 import { OrderMessagingDataMapper } from '../mapper/OrderMessagingDataMapper';
 import { OrderApprovalStatus } from '@app/common';
 
-@Injectable()
+
 export class RestaurantApprovalResponseKafkaListener
   implements KafkaConsumer<RestaurantApprovalResponseAvroModel>
 {

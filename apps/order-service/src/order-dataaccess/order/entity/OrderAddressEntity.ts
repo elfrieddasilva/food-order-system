@@ -13,9 +13,7 @@ export class OrderAddressEntity {
   @PrimaryGeneratedColumn()
   id: UUID;
 
-  @OneToOne(() => OrderEntity, (order) => order.address, {
-    cascade: true,
-  })
+  @OneToOne(() => OrderEntity, (order) => order.address)
   @JoinColumn({ name: 'ORDER_ID' })
   order: OrderEntity;
 

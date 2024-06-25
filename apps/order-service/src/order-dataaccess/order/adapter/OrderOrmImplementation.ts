@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm"
 import { OrderEntity } from '../entity/OrderEntity';
 
-@Injectable()
+
 export class OrderOrmImplementation {
   constructor(
     @InjectRepository(OrderEntity) private readonly orderOrmRepository: OrderOrmRepository,

@@ -6,7 +6,7 @@ import { OrderServiceConfigData } from '@app/order-domain';
 import { KafkaProducer } from 'apps/infrastructure/kafka/kafka-producer/service/KafkaProducer';
 import { PaymentRequestAvroModel } from 'apps/infrastructure/kafka/kafka-model/types';
 
-@Injectable()
+
 export class CreateOrderKafkaMessagePublisher
   implements OrderCreatedPaymentRequestMessagePublisher
 {
