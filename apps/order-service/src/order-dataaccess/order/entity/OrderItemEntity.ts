@@ -5,7 +5,7 @@ import { UUID } from '@app/common';
 @Entity({ name: 'order_items' })
 export class OrderItemEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: UUID;
+  id: string;
 
   @Column('uuid')
   orderId: UUID;
@@ -26,7 +26,7 @@ export class OrderItemEntity {
   @Column('float')
   subTotal: number;
 
-  public getId(): UUID {
+  public getId(): string {
     return this.id;
   }
 
@@ -38,7 +38,7 @@ export class OrderItemEntity {
     return this.order;
   }
 
-  public setId(id: UUID): void {
+  public setId(id: string): void {
     this.id = id;
   }
 
@@ -87,7 +87,7 @@ export class OrderItemEntity {
   }
 }
 class OrderItemEntityBuilder {
-  private _id: UUID;
+  private _id: string;
   private _orderId: UUID;
   private _order: OrderEntity;
   private _productId: UUID;
@@ -95,7 +95,7 @@ class OrderItemEntityBuilder {
   private _quantity: number;
   private _subTotal: number;
 
-  public id(id: UUID): OrderItemEntityBuilder {
+  public id(id: string): OrderItemEntityBuilder {
     this._id = id;
     return this;
   }
